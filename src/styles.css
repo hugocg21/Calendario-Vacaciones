@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+/* styles.css */
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+/* Agrega otros estilos globales aquí */
+body {
+  font-family: Roboto, sans-serif;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  padding: 16px;
+  background-color: #3f51b5;
+  color: white;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Seleccionar Opción</h2>
+<mat-dialog-content>
+  <mat-radio-group [(ngModel)]="vacationType" class="full-width">
+    <mat-radio-button value="vacation">Día de Vacaciones</mat-radio-button>
+    <mat-radio-button value="hours">Horas de Libre Disposición</mat-radio-button>
+  </mat-radio-group>
+
+  <div *ngIf="vacationType === 'hours'" class="hours-input">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Horas de libre disposición</mat-label>
+      <input matInput [(ngModel)]="hours" type="number" required>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="onSubmit()">Guardar</button>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+</mat-dialog-actions>

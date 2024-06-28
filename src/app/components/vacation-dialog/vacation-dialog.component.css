@@ -1,0 +1,13 @@
+/* vacation-dialog.component.css */
+.full-width {
+  width: 100%;
+}
+
+.hours-input {
+  margin-top: 16px;
+}
+
+/* Asegúrate de que los botones en mat-dialog-actions estén alineados a la derecha */
+::ng-deep .mat-dialog-actions {
+  justify-content: flex-end;
+}

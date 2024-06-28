@@ -1,0 +1,20 @@
+<app-vacation-summary></app-vacation-summary>
+<div class="calendar-container">
+  <div class="calendar" style="width: 95%;">
+    <div class="month-calendar" *ngFor="let month of months">
+      <div class="calendar-header">
+        <h2>{{ month.date.format('MMMM YYYY') }}</h2>
+      </div>
+      <div class="calendar-body mat-calendar">
+        <div class="calendar-weekday" *ngFor="let day of weekDays">{{ day }}</div>
+        <div class="day"
+             *ngFor="let day of month.days"
+             [ngClass]="{'selected': isSelected(day), 'disabled': !isCurrentMonth(day, month.date)}"
+             (click)="selectDay(day)"
+             [class.disabled]="!isCurrentMonth(day, month.date)">
+          {{ day.formatted }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

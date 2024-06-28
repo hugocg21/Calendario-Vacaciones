@@ -1,0 +1,11 @@
+/* vacation-form.component.css */
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: auto;
+}
+
+mat-form-field {
+  margin-bottom: 16px;
+}
