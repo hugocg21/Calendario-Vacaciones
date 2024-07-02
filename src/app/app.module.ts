@@ -6,29 +6,33 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatNativeDateModule, DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import {
+  MatNativeDateModule,
+  DateAdapter,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CustomDateAdapter } from './adapters/custom-date-adapter'; // Importar desde la nueva carpeta
-import { CalendarComponent } from './components/calendar/calendar.component';
+import { CustomDateAdapter } from './adapters/custom-date-adapter';
 import { VacationDialogComponent } from './components/vacation-dialog/vacation-dialog.component';
-import { VacationFormComponent } from './components/vacation-form/vacation-form.component';
 import { VacationSummaryComponent } from './components/vacation-summary/vacation-summary.component';
 import { VacationService } from './services/vacation.service';
 import { MyCalendarComponent } from './components/my-calendar/my-calendar.component';
 import { MatIconModule } from '@angular/material/icon';
+import { UserSelectorComponent } from './components/user-selector/user-selector.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CalendarComponent,
-    VacationFormComponent,
     VacationSummaryComponent,
     VacationDialogComponent,
-    MyCalendarComponent
+    MyCalendarComponent,
+    UserSelectorComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,8 +51,8 @@ import { MatIconModule } from '@angular/material/icon';
   providers: [
     VacationService,
     { provide: DateAdapter, useClass: CustomDateAdapter },
-    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' }
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
