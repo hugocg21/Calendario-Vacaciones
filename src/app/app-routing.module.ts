@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'form', component: VacationFormComponent },
   { path: 'summary', component: VacationSummaryComponent },
   { path: 'my-calendar', component: MyCalendarComponent },
-  { path: '', redirectTo: '/form', pathMatch: 'full' }
+  { path: '', redirectTo: '/my-calendar', pathMatch: 'full' }
 ];
 
 @NgModule({
