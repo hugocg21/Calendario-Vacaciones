@@ -8,7 +8,7 @@
 .month-calendar {
   flex: 1 0 21%;
   margin: 10px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   padding: 10px;
   border-radius: 8px;
 }
@@ -39,7 +39,7 @@
 .month-calendar {
   flex: 1 0 21%;
   margin: 10px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   padding: 10px;
   border-radius: 8px;
   background: white;
@@ -91,7 +91,16 @@
 }
 
 .day.selected {
-  background-color: #ffcc00;
+  color: white;
+}
+
+.day.vacation {
+  background-color: #4caf50;
+  color: white;
+}
+
+.day.hours {
+  background-color: #2196f3;
   color: white;
 }
 

@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import moment from 'moment';
+import { VacationDialogComponent } from '../vacation-dialog/vacation-dialog.component';
+import { VacationService } from '../../services/vacation.service';
 
 interface Day {
   date: moment.Moment;
   formatted: string;
   selected: boolean;
+  type?: string; // 'vacation' or 'hours'
 }
 
 interface Month {
@@ -20,20 +24,19 @@ interface Month {
 export class MyCalendarComponent {
   months: Month[] = [];
   selectedDays: Set<string> = new Set<string>();
-  weekDays: string[] = [];
+  weekDays: string[] = moment.weekdaysShort();
 
-  constructor() {}
+  constructor(private dialog: MatDialog, private vacationService: VacationService) {}
 
   ngOnInit() {
-    // Configurar el inicio de la semana en lunes
     moment.updateLocale('en', {
       week: {
-        dow: 1, // El día de inicio de la semana (0 - domingo, 1 - lunes)
+        dow: 1,
       }
     });
 
     this.generateCalendar();
-    this.weekDays = moment.weekdaysShort(true); // Obtener los nombres de los días de la semana comenzando por lunes
+    this.weekDays = moment.weekdaysShort(true);
   }
 
   generateCalendar() {
@@ -58,10 +61,14 @@ export class MyCalendarComponent {
 
     while (date.isBefore(endDate, 'day')) {
       const dayDate = date.add(1, 'day').clone();
+      const isSelected = this.vacationService.isSelected(dayDate.toDate());
+      const vacation = this.vacationService.getVacations().find(v => v.date.toDateString() === dayDate.toDate().toDateString());
+
       days.push({
         date: dayDate,
         formatted: dayDate.format('D'),
-        selected: this.selectedDays.has(dayDate.format('YYYY-MM-DD'))
+        selected: isSelected,
+        type: vacation ? vacation.type : undefined
       });
     }
 
@@ -69,17 +76,32 @@ export class MyCalendarComponent {
   }
 
   selectDay(day: Day) {
-    const formattedDate = day.date.format('YYYY-MM-DD');
-    if (this.selectedDays.has(formattedDate)) {
-      this.selectedDays.delete(formattedDate);
-    } else {
-      this.selectedDays.add(formattedDate);
-    }
-    day.selected = !day.selected;
+    const dialogRef = this.dialog.open(VacationDialogComponent, {
+      width: '300px',
+      data: { date: day.date.toDate() }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const formattedDate = day.date.format('YYYY-MM-DD');
+        if (result.type === 'vacation') {
+          this.selectedDays.add(formattedDate);
+          day.selected = true;
+          day.type = 'vacation';
+          this.vacationService.addVacation(day.date.toDate(), 'vacation');
+        } else if (result.type === 'hours') {
+          console.log(`Horas seleccionadas: ${result.hours} en el día ${formattedDate}`);
+          this.selectedDays.add(formattedDate);
+          day.selected = true;
+          day.type = 'hours';
+          this.vacationService.addVacation(day.date.toDate(), 'hours', result.hours);
+        }
+      }
+    });
   }
 
   isSelected(day: Day): boolean {
-    return this.selectedDays.has(day.date.format('YYYY-MM-DD'));
+    return this.vacationService.isSelected(day.date.toDate());
   }
 
   isCurrentMonth(day: Day, month: moment.Moment): boolean {

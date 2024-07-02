@@ -8,10 +8,10 @@ import { Vacation } from '../models/vacation.model';
 export class VacationService {
   private vacations: Vacation[] = [];
   private selectedDates: Set<string> = new Set();
-  private totalVacationDays: number = 40; // Total de días de vacaciones disponibles
-  private usedVacationDays: number = 0;  // Total de días de vacaciones usados
-  private totalFreeHours: number = 88.5;   // Total de horas de libre disposición disponibles
-  private usedFreeHours: number = 0;     // Total de horas de libre disposición usadas
+  private totalVacationDays: number = 22; // Total inicial de días de vacaciones
+  private usedVacationDays: number = 0;
+  private totalFreeHours: number = 88.5; // Total inicial de horas libres
+  private usedFreeHours: number = 0;
 
   private vacationDaysChanged = new Subject<void>();
 
@@ -23,10 +23,8 @@ export class VacationService {
     console.log(`Added vacation: ${date.toDateString()} with type: ${type} and hours: ${hours}`);
     if (type === 'vacation') {
       this.usedVacationDays++;
-      this.totalVacationDays--;
     } else if (type === 'hours' && hours) {
       this.usedFreeHours += hours;
-      this.totalFreeHours -= hours;
     }
     this.vacationDaysChanged.next();
   }
