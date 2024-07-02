@@ -25,10 +25,8 @@ export class VacationService {
     console.log(`Added vacation: ${date.toDateString()} with type: ${type} and hours: ${hours}`);
     if (type === 'vacation') {
       this.usedVacationDays++;
-      this.totalVacationDays--;
     } else if (type === 'hours' && hours) {
       this.usedFreeHours += hours;
-      this.totalFreeHours -= hours;
     }
     this.vacationDaysChanged.next();
     this.saveToLocalStorage();
@@ -41,10 +39,8 @@ export class VacationService {
       this.selectedDates.delete(date.toDateString());
       if (vacation.type === 'vacation') {
         this.usedVacationDays--;
-        this.totalVacationDays++;
       } else if (vacation.type === 'hours' && vacation.hours) {
         this.usedFreeHours -= vacation.hours;
-        this.totalFreeHours += vacation.hours;
       }
       this.vacationDaysChanged.next();
       this.saveToLocalStorage();
@@ -140,7 +136,7 @@ export class VacationService {
     localStorage.removeItem('usedFreeHours');
     this.vacations = [];
     this.selectedDates.clear();
-    this.totalVacationDays = 40;
+    this.totalVacationDays = 22;
     this.usedVacationDays = 0;
     this.totalFreeHours = 88.5;
     this.usedFreeHours = 0;
