@@ -9,7 +9,13 @@
         <div class="calendar-weekday" *ngFor="let day of weekDays">{{ day }}</div>
         <div class="day"
              *ngFor="let day of month.days"
-             [ngClass]="{'selected': isSelected(day), 'disabled': !isCurrentMonth(day, month.date), 'vacation': day.type === 'vacation', 'hours': day.type === 'hours'}"
+             [ngClass]="{
+              'selected': isSelected(day),
+              'disabled': !isCurrentMonth(day, month.date),
+              'vacation': day.type === 'vacation',
+              'hours': day.type === 'hours',
+              'weekend': day.weekend
+            }" 
              (click)="selectDay(day)">
           {{ day.formatted }}
         </div>

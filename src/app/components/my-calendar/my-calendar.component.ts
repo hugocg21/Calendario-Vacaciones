@@ -9,6 +9,8 @@ interface Day {
   formatted: string;
   selected: boolean;
   type?: string; // 'vacation' or 'hours'
+  hours?: number; // Add this line
+  weekend: boolean;
 }
 
 interface Month {
@@ -24,7 +26,7 @@ interface Month {
 export class MyCalendarComponent {
   months: Month[] = [];
   selectedDays: Set<string> = new Set<string>();
-  weekDays: string[] = moment.weekdaysShort();
+  weekDays: string[] = moment.weekdaysShort(true);
 
   constructor(private dialog: MatDialog, private vacationService: VacationService) {}
 
@@ -36,11 +38,14 @@ export class MyCalendarComponent {
     });
 
     this.generateCalendar();
-    this.weekDays = moment.weekdaysShort(true);
+    this.vacationService.getVacationDaysChangedEmitter().subscribe(() => {
+      this.generateCalendar();
+    });
   }
 
   generateCalendar() {
     const startOfYear = moment().startOf('year');
+    this.months = [];
     for (let i = 0; i < 12; i++) {
       const monthDate = startOfYear.clone().add(i, 'months');
       this.months.push({
@@ -62,13 +67,16 @@ export class MyCalendarComponent {
     while (date.isBefore(endDate, 'day')) {
       const dayDate = date.add(1, 'day').clone();
       const isSelected = this.vacationService.isSelected(dayDate.toDate());
-      const vacation = this.vacationService.getVacations().find(v => v.date.toDateString() === dayDate.toDate().toDateString());
+      const vacation = this.vacationService.getVacations().find(v => new Date(v.date).toDateString() === dayDate.toDate().toDateString());
+      const isWeekend = dayDate.day() === 0 || dayDate.day() === 6;
 
       days.push({
         date: dayDate,
         formatted: dayDate.format('D'),
         selected: isSelected,
-        type: vacation ? vacation.type : undefined
+        type: vacation ? vacation.type : undefined,
+        hours: vacation ? vacation.hours : undefined, // Add this line
+        weekend: isWeekend
       });
     }
 
@@ -78,23 +86,30 @@ export class MyCalendarComponent {
   selectDay(day: Day) {
     const dialogRef = this.dialog.open(VacationDialogComponent, {
       width: '300px',
-      data: { date: day.date.toDate() }
+      data: { date: day.date.toDate(), type: day.type, hours: day.hours }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const formattedDate = day.date.format('YYYY-MM-DD');
-        if (result.type === 'vacation') {
-          this.selectedDays.add(formattedDate);
-          day.selected = true;
-          day.type = 'vacation';
-          this.vacationService.addVacation(day.date.toDate(), 'vacation');
-        } else if (result.type === 'hours') {
-          console.log(`Horas seleccionadas: ${result.hours} en el día ${formattedDate}`);
-          this.selectedDays.add(formattedDate);
-          day.selected = true;
-          day.type = 'hours';
-          this.vacationService.addVacation(day.date.toDate(), 'hours', result.hours);
+        if (result.delete) {
+          this.vacationService.removeVacation(day.date.toDate());
+          day.selected = false;
+          day.type = undefined;
+        } else {
+          const formattedDate = day.date.format('YYYY-MM-DD');
+          if (result.type === 'vacation') {
+            this.selectedDays.add(formattedDate);
+            day.selected = true;
+            day.type = 'vacation';
+            this.vacationService.addVacation(day.date.toDate(), 'vacation');
+          } else if (result.type === 'hours') {
+            console.log(`Horas seleccionadas: ${result.hours} en el día ${formattedDate}`);
+            this.selectedDays.add(formattedDate);
+            day.selected = true;
+            day.type = 'hours';
+            day.hours = result.hours; // Add this line
+            this.vacationService.addVacation(day.date.toDate(), 'hours', result.hours);
+          }
         }
       }
     });

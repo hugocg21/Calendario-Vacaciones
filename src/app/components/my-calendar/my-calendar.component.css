@@ -104,6 +104,17 @@
   color: white;
 }
 
+.calendar-weekday {
+  text-align: center;
+  font-weight: bold;
+  color: #3f51b5;
+}
+
+.day.weekend {
+  background-color: #fc6c62; /* Color para fines de semana */
+  color: white;
+}
+
 .day.disabled {
   color: #ccc;
   pointer-events: none;
