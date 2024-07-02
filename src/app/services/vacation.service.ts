@@ -8,7 +8,7 @@ import { Vacation } from '../models/vacation.model';
 export class VacationService {
   private vacations: Vacation[] = [];
   private selectedDates: Set<string> = new Set();
-  private totalVacationDays: number = 40;
+  private totalVacationDays: number = 22;
   private usedVacationDays: number = 0;
   private totalFreeHours: number = 88.5;
   private usedFreeHours: number = 0;
