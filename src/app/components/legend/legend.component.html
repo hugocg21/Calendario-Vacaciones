@@ -1,0 +1,8 @@
+<div class="legend-container">
+  <div class="legend-item-all">
+    <div *ngFor="let item of legendItems" class="legend-item">
+      <span class="color-box" [ngStyle]="{'background-color': item.color}"></span>
+      <span class="label">{{ item.label }}</span>
+    </div>
+  </div>
+</div>

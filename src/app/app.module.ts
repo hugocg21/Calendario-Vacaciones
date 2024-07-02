@@ -24,6 +24,7 @@ import { MyCalendarComponent } from './components/my-calendar/my-calendar.compon
 import { MatIconModule } from '@angular/material/icon';
 import { UserSelectorComponent } from './components/user-selector/user-selector.component';
 import { HeaderComponent } from './components/header/header.component';
+import { LegendComponent } from './components/legend/legend.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { HeaderComponent } from './components/header/header.component';
     MyCalendarComponent,
     UserSelectorComponent,
     HeaderComponent,
+    LegendComponent,
   ],
   imports: [
     BrowserModule,

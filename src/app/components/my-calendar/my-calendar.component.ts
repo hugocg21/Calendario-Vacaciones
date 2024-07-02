@@ -27,7 +27,7 @@ interface Month {
 export class MyCalendarComponent {
   months: Month[] = [];
   selectedDays: Set<string> = new Set<string>();
-  weekDays: string[] = moment.weekdaysShort(true);
+  weekDays: string[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -35,11 +35,13 @@ export class MyCalendarComponent {
   ) {}
 
   ngOnInit() {
-    moment.updateLocale('en', {
+    moment.updateLocale('es', {
       week: {
-        dow: 1,
+        dow: 1, // Lunes es el primer día de la semana
       },
     });
+
+    this.weekDays = moment.weekdaysShort(true); // Esto debería devolver ['lun', 'mar', 'mie', 'jue', 'vie', 'sáb', 'dom']
 
     this.generateCalendar();
     this.vacationService.getVacationDaysChangedEmitter().subscribe(() => {
@@ -72,11 +74,11 @@ export class MyCalendarComponent {
       const dayDate = date.add(1, 'day').clone();
       const isSelected = this.vacationService.isSelected(dayDate.toDate());
       const vacation = this.vacationService
-      .getVacations()
-      .find(
-        (v) =>
-          new Date(v.date).toDateString() === dayDate.toDate().toDateString()
-      );
+        .getVacations()
+        .find(
+          (v) =>
+            new Date(v.date).toDateString() === dayDate.toDate().toDateString()
+        );
       const isWeekend = dayDate.day() === 0 || dayDate.day() === 6;
 
       days.push({
