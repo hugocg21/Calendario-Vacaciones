@@ -1,22 +1,36 @@
+<!-- <div style="display: flex; justify-content: space-between; padding-top: 20px; padding-right: 45px; padding-left: 45px;">
+  <app-user-selector
+    [persons]="persons"
+    [(selectedPerson)]="selectedPerson">
+  </app-user-selector>
+
+  <app-vacation-summary [selectedPerson]="selectedPerson"></app-vacation-summary>
+</div> -->
+
 <app-vacation-summary></app-vacation-summary>
+
 <div class="calendar-container">
-  <div class="calendar" style="width: 95%;">
+  <div class="calendar" style="width: 95%">
     <div class="month-calendar" *ngFor="let month of months">
       <div class="calendar-header">
-        <h2>{{ month.date.format('MMMM YYYY') }}</h2>
+        <h2>{{ month.date.format("MMMM YYYY") }}</h2>
       </div>
       <div class="calendar-body mat-calendar">
-        <div class="calendar-weekday" *ngFor="let day of weekDays">{{ day }}</div>
-        <div class="day"
-             *ngFor="let day of month.days"
-             [ngClass]="{
-              'selected': isSelected(day),
-              'disabled': !isCurrentMonth(day, month.date),
-              'vacation': day.type === 'vacation',
-              'hours': day.type === 'hours',
-              'weekend': day.weekend
-            }" 
-             (click)="selectDay(day)">
+        <div class="calendar-weekday" *ngFor="let day of weekDays">
+          {{ day }}
+        </div>
+        <div
+          class="day"
+          *ngFor="let day of month.days"
+          [ngClass]="{
+            selected: isSelected(day),
+            disabled: !isCurrentMonth(day, month.date),
+            vacation: day.type === 'vacation',
+            hours: day.type === 'hours',
+            weekend: day.weekend
+          }"
+          (click)="selectDay(day)"
+        >
           {{ day.formatted }}
         </div>
       </div>

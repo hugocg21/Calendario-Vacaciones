@@ -7,7 +7,6 @@
   margin-top: 16px;
 }
 
-/* Asegúrate de que los botones en mat-dialog-actions estén alineados a la derecha */
 ::ng-deep .mat-dialog-actions {
   justify-content: flex-end;
 }

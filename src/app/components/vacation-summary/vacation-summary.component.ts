@@ -4,7 +4,7 @@ import { VacationService } from '../../services/vacation.service';
 @Component({
   selector: 'app-vacation-summary',
   templateUrl: './vacation-summary.component.html',
-  styleUrls: ['./vacation-summary.component.css']
+  styleUrls: ['./vacation-summary.component.css'],
 })
 export class VacationSummaryComponent implements OnInit {
   totalVacationDays: number = 0;

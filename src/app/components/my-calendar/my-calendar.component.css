@@ -111,17 +111,11 @@
 }
 
 .day.weekend {
-  background-color: #fc6c62; /* Color para fines de semana */
+  background-color: #fc6c62;
   color: white;
 }
 
 .day.disabled {
   color: #ccc;
   pointer-events: none;
-}
-
-.mat-calendar {
-  width: 100%;
-  transform: scale(1);
-  transform-origin: top left;
 }

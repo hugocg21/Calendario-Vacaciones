@@ -4,10 +4,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-vacation-dialog',
   templateUrl: './vacation-dialog.component.html',
-  styleUrls: ['./vacation-dialog.component.css']
+  styleUrls: ['./vacation-dialog.component.css'],
 })
 export class VacationDialogComponent {
-  vacationType: string = 'vacation'; // 'vacation' or 'hours'
+  vacationType: string = 'vacation';
   hours: number = 0;
   canDelete: boolean = false;
 
@@ -17,8 +17,12 @@ export class VacationDialogComponent {
   ) {}
 
   ngOnInit() {
-    // Comprobar si hay algo que borrar (vacaciones u horas)
-    this.canDelete = this.data.type === 'vacation' || (this.data.type === 'hours' && this.data.hours > 0);
+    this.canDelete =
+      this.data.type === 'vacation' ||
+      (this.data.type === 'hours' && this.data.hours > 0);
+    if (this.data.type === 'hours') {
+      this.hours = this.data.hours;
+    }
   }
 
   onSubmit() {

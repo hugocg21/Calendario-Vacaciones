@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { Vacation } from '../models/vacation.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class VacationService {
   private vacations: Vacation[] = [];
@@ -22,7 +22,9 @@ export class VacationService {
   addVacation(date: Date, type: string, hours?: number) {
     this.vacations.push({ date, type, hours });
     this.selectedDates.add(date.toDateString());
-    console.log(`Added vacation: ${date.toDateString()} with type: ${type} and hours: ${hours}`);
+    console.log(
+      `Added vacation: ${date.toDateString()} with type: ${type} and hours: ${hours}`
+    );
     if (type === 'vacation') {
       this.usedVacationDays++;
     } else if (type === 'hours' && hours) {
@@ -33,7 +35,9 @@ export class VacationService {
   }
 
   removeVacation(date: Date) {
-    const index = this.vacations.findIndex(v => new Date(v.date).toDateString() === date.toDateString());
+    const index = this.vacations.findIndex(
+      (v) => new Date(v.date).toDateString() === date.toDateString()
+    );
     if (index > -1) {
       const vacation = this.vacations.splice(index, 1)[0];
       this.selectedDates.delete(date.toDateString());
@@ -90,9 +94,18 @@ export class VacationService {
 
   saveToLocalStorage() {
     localStorage.setItem('vacations', JSON.stringify(this.vacations));
-    localStorage.setItem('selectedDates', JSON.stringify(Array.from(this.selectedDates)));
-    localStorage.setItem('totalVacationDays', JSON.stringify(this.totalVacationDays));
-    localStorage.setItem('usedVacationDays', JSON.stringify(this.usedVacationDays));
+    localStorage.setItem(
+      'selectedDates',
+      JSON.stringify(Array.from(this.selectedDates))
+    );
+    localStorage.setItem(
+      'totalVacationDays',
+      JSON.stringify(this.totalVacationDays)
+    );
+    localStorage.setItem(
+      'usedVacationDays',
+      JSON.stringify(this.usedVacationDays)
+    );
     localStorage.setItem('totalFreeHours', JSON.stringify(this.totalFreeHours));
     localStorage.setItem('usedFreeHours', JSON.stringify(this.usedFreeHours));
   }
@@ -102,7 +115,7 @@ export class VacationService {
     if (vacations) {
       this.vacations = JSON.parse(vacations).map((v: Vacation) => ({
         ...v,
-        date: new Date(v.date)
+        date: new Date(v.date),
       }));
     }
     const selectedDates = localStorage.getItem('selectedDates');
@@ -143,3 +156,153 @@ export class VacationService {
     this.vacationDaysChanged.next();
   }
 }
+
+// import { Injectable } from '@angular/core';
+// import { Subject } from 'rxjs';
+// import { Vacation } from '../models/vacation.model';
+
+// @Injectable({
+//   providedIn: 'root'
+// })
+// export class VacationService {
+//   private vacationsByPerson: { [key: string]: Vacation[] } = {};
+//   private selectedDatesByPerson: { [key: string]: Set<string> } = {};
+//   private totalVacationDaysByPerson: { [key: string]: number } = {};
+//   private usedVacationDaysByPerson: { [key: string]: number } = {};
+//   private totalFreeHoursByPerson: { [key: string]: number } = {};
+//   private usedFreeHoursByPerson: { [key: string]: number } = {};
+//   private vacationDaysChanged = new Subject<void>();
+
+//   constructor() {
+//     this.loadFromLocalStorage();
+//   }
+
+//   initializePerson(person: string, totalVacationDays: number, totalFreeHours: number) {
+//     if (!this.totalVacationDaysByPerson[person]) {
+//       this.totalVacationDaysByPerson[person] = totalVacationDays;
+//       this.usedVacationDaysByPerson[person] = 0;
+//     }
+//     if (!this.totalFreeHoursByPerson[person]) {
+//       this.totalFreeHoursByPerson[person] = totalFreeHours;
+//       this.usedFreeHoursByPerson[person] = 0;
+//     }
+//     if (!this.vacationsByPerson[person]) {
+//       this.vacationsByPerson[person] = [];
+//       this.selectedDatesByPerson[person] = new Set();
+//     }
+//   }
+
+//   addVacation(person: string, date: Date, type: string, hours?: number) {
+//     if (!this.vacationsByPerson[person]) {
+//       this.vacationsByPerson[person] = [];
+//       this.selectedDatesByPerson[person] = new Set();
+//     }
+
+//     this.vacationsByPerson[person].push({ date, type, hours });
+//     this.selectedDatesByPerson[person].add(date.toDateString());
+//     if (type === 'vacation') {
+//       this.usedVacationDaysByPerson[person]++;
+//     } else if (type === 'hours' && hours) {
+//       this.usedFreeHoursByPerson[person] += hours;
+//     }
+//     this.vacationDaysChanged.next();
+//     this.saveToLocalStorage();
+//   }
+
+//   removeVacation(person: string, date: Date) {
+//     if (!this.vacationsByPerson[person]) return;
+
+//     const index = this.vacationsByPerson[person].findIndex(v => new Date(v.date).toDateString() === date.toDateString());
+//     if (index > -1) {
+//       const vacation = this.vacationsByPerson[person].splice(index, 1)[0];
+//       this.selectedDatesByPerson[person].delete(date.toDateString());
+//       if (vacation.type === 'vacation') {
+//         this.usedVacationDaysByPerson[person]--;
+//       } else if (vacation.type === 'hours' && vacation.hours) {
+//         this.usedFreeHoursByPerson[person] -= vacation.hours;
+//       }
+//       this.vacationDaysChanged.next();
+//       this.saveToLocalStorage();
+//     }
+//   }
+
+//   getVacations(person: string): Vacation[] {
+//     return this.vacationsByPerson[person] || [];
+//   }
+
+//   isSelected(person: string, date: Date): boolean {
+//     return this.selectedDatesByPerson[person]?.has(date.toDateString()) || false;
+//   }
+
+//   getTotalVacationDays(person: string): number {
+//     return this.totalVacationDaysByPerson[person] || 0;
+//   }
+
+//   getUsedVacationDays(person: string): number {
+//     return this.usedVacationDaysByPerson[person] || 0;
+//   }
+
+//   getTotalFreeHours(person: string): number {
+//     return this.totalFreeHoursByPerson[person] || 0;
+//   }
+
+//   getUsedFreeHours(person: string): number {
+//     return this.usedFreeHoursByPerson[person] || 0;
+//   }
+
+//   getVacationDaysChangedEmitter() {
+//     return this.vacationDaysChanged.asObservable();
+//   }
+
+//   saveToLocalStorage() {
+//     localStorage.setItem('vacationsByPerson', JSON.stringify(this.vacationsByPerson));
+//     localStorage.setItem('selectedDatesByPerson', JSON.stringify(this.selectedDatesByPerson));
+//     localStorage.setItem('totalVacationDaysByPerson', JSON.stringify(this.totalVacationDaysByPerson));
+//     localStorage.setItem('usedVacationDaysByPerson', JSON.stringify(this.usedVacationDaysByPerson));
+//     localStorage.setItem('totalFreeHoursByPerson', JSON.stringify(this.totalFreeHoursByPerson));
+//     localStorage.setItem('usedFreeHoursByPerson', JSON.stringify(this.usedFreeHoursByPerson));
+//   }
+
+//   loadFromLocalStorage() {
+//     const vacationsByPerson = localStorage.getItem('vacationsByPerson');
+//     if (vacationsByPerson) {
+//       this.vacationsByPerson = JSON.parse(vacationsByPerson);
+//     }
+//     const selectedDatesByPerson = localStorage.getItem('selectedDatesByPerson');
+//     if (selectedDatesByPerson) {
+//       this.selectedDatesByPerson = JSON.parse(selectedDatesByPerson);
+//     }
+//     const totalVacationDaysByPerson = localStorage.getItem('totalVacationDaysByPerson');
+//     if (totalVacationDaysByPerson) {
+//       this.totalVacationDaysByPerson = JSON.parse(totalVacationDaysByPerson);
+//     }
+//     const usedVacationDaysByPerson = localStorage.getItem('usedVacationDaysByPerson');
+//     if (usedVacationDaysByPerson) {
+//       this.usedVacationDaysByPerson = JSON.parse(usedVacationDaysByPerson);
+//     }
+//     const totalFreeHoursByPerson = localStorage.getItem('totalFreeHoursByPerson');
+//     if (totalFreeHoursByPerson) {
+//       this.totalFreeHoursByPerson = JSON.parse(totalFreeHoursByPerson);
+//     }
+//     const usedFreeHoursByPerson = localStorage.getItem('usedFreeHoursByPerson');
+//     if (usedFreeHoursByPerson) {
+//       this.usedFreeHoursByPerson = JSON.parse(usedFreeHoursByPerson);
+//     }
+//   }
+
+//   clearLocalStorage() {
+//     localStorage.removeItem('vacationsByPerson');
+//     localStorage.removeItem('selectedDatesByPerson');
+//     localStorage.removeItem('totalVacationDaysByPerson');
+//     localStorage.removeItem('usedVacationDaysByPerson');
+//     localStorage.removeItem('totalFreeHoursByPerson');
+//     localStorage.removeItem('usedFreeHoursByPerson');
+//     this.vacationsByPerson = {};
+//     this.selectedDatesByPerson = {};
+//     this.totalVacationDaysByPerson = {};
+//     this.usedVacationDaysByPerson = {};
+//     this.totalFreeHoursByPerson = {};
+//     this.usedFreeHoursByPerson = {};
+//     this.vacationDaysChanged.next();
+//   }
+// }
