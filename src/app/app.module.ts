@@ -13,6 +13,7 @@ import {
 } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -49,6 +50,7 @@ import { LegendComponent } from './components/legend/legend.component';
     MatDialogModule,
     MatRadioModule,
     MatIconModule,
+    MatTooltipModule
   ],
   providers: [
     VacationService,
