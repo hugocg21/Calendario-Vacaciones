@@ -50,7 +50,7 @@ import { LegendComponent } from './components/legend/legend.component';
     MatDialogModule,
     MatRadioModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   providers: [
     VacationService,

@@ -116,13 +116,13 @@
 }
 
 .day.disabled {
-  color: #ccc;
+  color: #999;
   pointer-events: none;
 }
 
 .summary-legend-container {
   display: flex;
-  align-items: stretch; /* Asegura que los hijos tengan la misma altura */
+  align-items: stretch;
   margin-bottom: 20px;
 }
 

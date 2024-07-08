@@ -1,9 +1,13 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   background-color: #f9f9f9;
 }
 
 .app-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
+  overflow: hidden;
 }
