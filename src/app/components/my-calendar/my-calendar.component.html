@@ -23,6 +23,7 @@
               weekend: day.weekend && isCurrentMonth(day, month.date),
           }"
           (click)="selectDay(day)"
+          [matTooltip]="day.hours ? day.hours + ' horas de libre disposición' : ''"
         >
           {{ day.formatted }}
         </div>
