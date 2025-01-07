@@ -1,6 +1,0 @@
-<div class="person-selector">
-  <label for="person">Seleccionar Persona:</label>
-  <select id="person" [(ngModel)]="selectedPerson" (change)="onPersonChange(selectedPerson)">
-    <option *ngFor="let person of persons" [value]="person">{{ person }}</option>
-  </select>
-</div>

@@ -22,9 +22,16 @@ export class VacationSummaryComponent implements OnInit {
   }
 
   updateSummary() {
-    this.totalVacationDays = this.vacationService.getTotalVacationDays();
-    this.usedVacationDays = this.vacationService.getUsedVacationDays();
-    this.totalFreeHours = this.vacationService.getTotalFreeHours();
-    this.usedFreeHours = this.vacationService.getUsedFreeHours();
+    Promise.all([
+      this.vacationService.getTotalVacationDays(),
+      this.vacationService.getUsedVacationDays(),
+      this.vacationService.getTotalFreeHours(),
+      this.vacationService.getUsedFreeHours(),
+    ]).then(([totalDays, usedDays, totalHours, usedHours]) => {
+      this.totalVacationDays = totalDays;
+      this.usedVacationDays = usedDays;
+      this.totalFreeHours = totalHours;
+      this.usedFreeHours = usedHours;
+    });
   }
 }

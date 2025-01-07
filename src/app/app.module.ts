@@ -23,9 +23,9 @@ import { VacationSummaryComponent } from './components/vacation-summary/vacation
 import { VacationService } from './services/vacation.service';
 import { MyCalendarComponent } from './components/my-calendar/my-calendar.component';
 import { MatIconModule } from '@angular/material/icon';
-import { UserSelectorComponent } from './components/user-selector/user-selector.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LegendComponent } from './components/legend/legend.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,6 @@ import { LegendComponent } from './components/legend/legend.component';
     VacationSummaryComponent,
     VacationDialogComponent,
     MyCalendarComponent,
-    UserSelectorComponent,
     HeaderComponent,
     LegendComponent,
   ],
@@ -56,6 +55,7 @@ import { LegendComponent } from './components/legend/legend.component';
     VacationService,
     { provide: DateAdapter, useClass: CustomDateAdapter },
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    provideAnimationsAsync(),
   ],
   bootstrap: [AppComponent],
 })

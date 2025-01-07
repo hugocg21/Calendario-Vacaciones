@@ -17,9 +17,8 @@ export class VacationDialogComponent {
   ) {}
 
   ngOnInit() {
-    this.canDelete =
-      this.data.type === 'vacation' ||
-      (this.data.type === 'hours' && this.data.hours > 0);
+    this.vacationType = this.data.type || 'vacation';
+    this.canDelete = this.data.type === 'vacation' || (this.data.type === 'hours' && this.data.hours > 0);
     if (this.data.type === 'hours') {
       this.hours = this.data.hours;
     }
@@ -41,3 +40,4 @@ export class VacationDialogComponent {
     this.dialogRef.close();
   }
 }
+

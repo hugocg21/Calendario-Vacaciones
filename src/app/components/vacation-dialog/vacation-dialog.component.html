@@ -9,13 +9,13 @@
   <div *ngIf="vacationType === 'hours'" class="hours-input">
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Horas de libre disposición</mat-label>
-      <input matInput [(ngModel)]="hours" type="number" required />
+      <input matInput [(ngModel)]="hours" type="number" min="0" max="8.5" required />
     </mat-form-field>
   </div>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-raised-button color="warn" *ngIf="canDelete" (click)="onDelete()">Eliminar</button>
-  <button mat-raised-button color="primary" (click)="onSubmit()">Guardar</button>
+  <button mat-stroked-button color="warn" *ngIf="canDelete" (click)="onDelete()">Eliminar</button>
+  <button mat-raised-button color="primary" [disabled]="vacationType === 'hours' && hours <= 0" (click)="onSubmit()">Guardar</button>
   <button mat-button (click)="onCancel()">Cancelar</button>
 </mat-dialog-actions>

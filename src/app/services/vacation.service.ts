@@ -10,7 +10,7 @@ export class VacationService {
   private selectedDates: Set<string> = new Set();
   private totalVacationDays: number = 22;
   private usedVacationDays: number = 0;
-  private totalFreeHours: number = 88.5;
+  private totalFreeHours: number = 69.25;
   private usedFreeHours: number = 0;
 
   private vacationDaysChanged = new Subject<void>();
@@ -151,7 +151,7 @@ export class VacationService {
     this.selectedDates.clear();
     this.totalVacationDays = 22;
     this.usedVacationDays = 0;
-    this.totalFreeHours = 88.5;
+    this.totalFreeHours = 69.25;
     this.usedFreeHours = 0;
     this.vacationDaysChanged.next();
   }
