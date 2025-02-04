@@ -11,6 +11,8 @@ interface Day {
   type?: string;
   hours?: number;
   weekend: boolean;
+  holiday?: boolean; // Add this
+  holidayName?: string; // Add this
 }
 
 interface Month {
