@@ -155,4 +155,25 @@ export class VacationService {
     this.usedFreeHours = 0;
     this.vacationDaysChanged.next();
   }
+
+  private holidays: { date: string; name: string }[] = [
+    { date: '2025-01-01', name: 'Año Nuevo' },
+    { date: '2025-01-06', name: 'Día de Reyes' },
+    { date: '2025-04-18', name: 'Viernes Santo' },
+    { date: '2025-05-01', name: 'Día del Trabajador' },
+    { date: '2025-08-15', name: 'Asunción de la Virgen' },
+    { date: '2025-10-12', name: 'Día de la Hispanidad' },
+    { date: '2025-11-01', name: 'Día de Todos los Santos' },
+    { date: '2025-12-06', name: 'Día de la Constitución' },
+    { date: '2025-12-25', name: 'Navidad' }
+  ];
+  
+  isHoliday(date: Date): boolean {
+    return this.holidays.some(holiday => holiday.date === moment(date).format('YYYY-MM-DD'));
+  }
+  
+  getHolidayName(date: Date): string | undefined {
+    const holiday = this.holidays.find(h => h.date === moment(date).format('YYYY-MM-DD'));
+    return holiday ? holiday.name : undefined;
+  }
 }
