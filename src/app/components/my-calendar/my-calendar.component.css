@@ -115,6 +115,14 @@
   color: white;
 }
 
+.day.holiday {
+  background-color: #ffcc00 !important;
+  color: black !important;
+  font-weight: bold;
+  border-radius: 50%;
+  border: 1px solid #e6b800;
+}
+
 .day.disabled {
   color: #999;
   pointer-events: none;
