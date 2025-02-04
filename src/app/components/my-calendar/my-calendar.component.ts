@@ -65,21 +65,20 @@ export class MyCalendarComponent {
     const endOfMonth = month.clone().endOf('month');
     const startDate = startOfMonth.clone().startOf('week');
     const endDate = endOfMonth.clone().endOf('week');
-
+  
     const date = startDate.clone().subtract(1, 'day');
     const days: Day[] = [];
-
+  
     while (date.isBefore(endDate, 'day')) {
       const dayDate = date.add(1, 'day').clone();
       const isSelected = this.vacationService.isSelected(dayDate.toDate());
-      const vacation = this.vacationService
-        .getVacations()
-        .find(
-          (v) =>
-            new Date(v.date).toDateString() === dayDate.toDate().toDateString()
-        );
+      const vacation = this.vacationService.getVacations().find(v =>
+        new Date(v.date).toDateString() === dayDate.toDate().toDateString()
+      );
       const isWeekend = dayDate.day() === 0 || dayDate.day() === 6;
-
+      const isHoliday = this.vacationService.isHoliday(dayDate.toDate());
+      const holidayName = this.vacationService.getHolidayName(dayDate.toDate());
+  
       days.push({
         date: dayDate,
         formatted: dayDate.format('D'),
@@ -87,9 +86,11 @@ export class MyCalendarComponent {
         type: vacation ? vacation.type : undefined,
         hours: vacation ? vacation.hours : undefined,
         weekend: isWeekend,
+        holiday: isHoliday,
+        holidayName: holidayName
       });
     }
-
+  
     return days;
   }
 
