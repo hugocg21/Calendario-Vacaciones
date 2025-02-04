@@ -88,8 +88,8 @@ export class MyCalendarComponent {
         type: vacation ? vacation.type : undefined,
         hours: vacation ? vacation.hours : undefined,
         weekend: isWeekend,
-        holiday: isHoliday,
-        holidayName: holidayName
+        holiday: isHoliday, // Ensure this is correctly assigned
+        holidayName: holidayName // Ensure this is correctly assigned
       });
     }
   
