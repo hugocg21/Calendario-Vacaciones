@@ -17,13 +17,13 @@
           [ngClass]="{
             selected: isSelected(day, month.date),
             disabled: !isCurrentMonth(day, month.date),
-            vacation:
-              day.type === 'vacation' && isCurrentMonth(day, month.date),
-              hours: day.type === 'hours' && isCurrentMonth(day, month.date),
-              weekend: day.weekend && isCurrentMonth(day, month.date),
+            vacation: day.type === 'vacation' && isCurrentMonth(day, month.date),
+            hours: day.type === 'hours' && isCurrentMonth(day, month.date),
+            weekend: day.weekend && isCurrentMonth(day, month.date),
+            holiday: day.holiday && isCurrentMonth(day, month.date)
           }"
           (click)="selectDay(day)"
-          [matTooltip]="day.hours ? day.hours + ' horas de libre disposición' : ''"
+          [matTooltip]="day.holiday ? day.holidayName : (day.hours ? day.hours + ' horas de libre disposición' : '')"
         >
           {{ day.formatted }}
         </div>
