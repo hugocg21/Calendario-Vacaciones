@@ -160,13 +160,18 @@ export class VacationService {
   private holidays: { date: string; name: string }[] = [
     { date: '2025-01-01', name: 'Año Nuevo' },
     { date: '2025-01-06', name: 'Día de Reyes' },
+    { date: '2025-03-04', name: 'Carnaval'},
+    { date: '2025-04-17', name: 'Jueves Santo' },
     { date: '2025-04-18', name: 'Viernes Santo' },
     { date: '2025-05-01', name: 'Día del Trabajador' },
+    { date: '2025-06-30', name: 'San Pedro' },
     { date: '2025-08-15', name: 'Asunción de la Virgen' },
-    { date: '2025-10-12', name: 'Día de la Hispanidad' },
-    { date: '2025-11-01', name: 'Día de Todos los Santos' },
-    { date: '2025-12-06', name: 'Día de la Constitución' },
-    { date: '2025-12-25', name: 'Navidad' }
+    { date: '2025-09-08', name: 'Días de Asturias' },
+    { date: '2025-10-13', name: 'Día de la Hispanidad' },
+    { date: '2025-12-08', name: 'Día de la Constitución' },
+    { date: '2025-12-24', name: 'Noche Buena' },
+    { date: '2025-12-25', name: 'Navidad' },
+    { date: '2025-12-31', name: 'Noche Vieja' },
   ];
   
   isHoliday(date: Date): boolean {
