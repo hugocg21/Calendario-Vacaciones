@@ -1,32 +1,41 @@
-<div class="summary-legend-container">
-  <app-vacation-summary></app-vacation-summary>
-  <app-legend></app-legend>
+<div class="flex flex-col gap-5 mb-5 md:flex-row md:items-stretch">
+  <app-vacation-summary class="flex-1 flex flex-col justify-between md:mr-5"></app-vacation-summary>
+  <app-legend class="flex-shrink-0 flex flex-col justify-between"></app-legend>
 </div>
 
-<div class="calendar-container">
-  <div class="calendar" style="width: 95%">
-    <div class="month-calendar" *ngFor="let month of months">
-      <div class="calendar-header">
-        <h2>{{ month.date.format("MMMM YYYY") }}</h2>
+<div class="flex flex-wrap justify-center">
+  <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 bg-white rounded p-5 shadow-md w-[95%]">
+    <div *ngFor="let month of months" class="flex flex-col rounded-lg shadow-sm bg-white p-3">
+
+      <!-- Header del Mes -->
+      <div class="flex justify-center items-center w-full py-3 bg-indigo-600 text-white rounded-t-md">
+        <h2 class="text-center text-lg font-semibold">{{ month.date.format('MMMM YYYY') }}</h2>
       </div>
-      <div class="calendar-body mat-calendar">
-        <div class="calendar-weekday" *ngFor="let day of weekDays">{{ day }}</div>
-        <div
-          class="day"
-          *ngFor="let day of month.days"
+
+      <!-- Cuerpo del Calendario -->
+      <div class="grid grid-cols-7 gap-1 w-full p-2">
+
+        <!-- Días de la semana -->
+        <div *ngFor="let day of weekDays" class="text-center font-bold text-indigo-600 py-2">
+          {{ day }}
+        </div>
+
+        <!-- Días del mes -->
+        <div *ngFor="let day of month.days"
+          class="flex justify-center items-center w-10 h-10 rounded-full transition duration-300 text-sm select-none"
           [ngClass]="{
-            selected: isSelected(day, month.date),
-            disabled: !isCurrentMonth(day, month.date),
-            vacation:
-              day.type === 'vacation' && isCurrentMonth(day, month.date),
-              hours: day.type === 'hours' && isCurrentMonth(day, month.date),
-              weekend: day.weekend && isCurrentMonth(day, month.date),
-          }"
-          (click)="selectDay(day)"
-          [matTooltip]="day.hours ? day.hours + ' horas de libre disposición' : ''"
-        >
+            'bg-green-500 text-white': day.type === 'vacation' && isCurrentMonth(day, month.date),
+            'bg-blue-500 text-white': day.type === 'hours' && isCurrentMonth(day, month.date),
+            'bg-red-400 text-white': day.weekend && isCurrentMonth(day, month.date),
+            'bg-yellow-400 text-black font-bold border border-yellow-600 pointer-events-none': day.holiday && isCurrentMonth(day, month.date),
+            'ring-2 ring-indigo-500': isSelected(day, month.date),
+            'text-gray-400 opacity-50 pointer-events-none': !isCurrentMonth(day, month.date),
+            'hover:bg-black hover:bg-opacity-10 cursor-pointer': isCurrentMonth(day, month.date) && !day.type && !day.weekend && !day.holiday,
+          }" (click)="canSelectDay(day) && selectDay(day)"
+          [matTooltip]="(day.holiday ? day.holidayName : (day.hours ? day.hours + ' horas de libre disposición' : '')) ?? ''">
           {{ day.formatted }}
         </div>
+
       </div>
     </div>
   </div>

@@ -1,21 +1,22 @@
-<h2 mat-dialog-title>Seleccionar Opción</h2>
+<h2 mat-dialog-title class="text-xl font-semibold">Seleccionar Opción</h2>
 
 <mat-dialog-content>
-  <mat-radio-group [(ngModel)]="vacationType" class="full-width">
+  <mat-radio-group [(ngModel)]="vacationType" class="w-full flex flex-col gap-2 mt-4">
     <mat-radio-button value="vacation">Día de Vacaciones</mat-radio-button>
     <mat-radio-button value="hours">Horas de Libre Disposición</mat-radio-button>
   </mat-radio-group>
 
-  <div *ngIf="vacationType === 'hours'" class="hours-input">
-    <mat-form-field appearance="fill" class="full-width">
+  <div *ngIf="vacationType === 'hours'" class="mt-4">
+    <mat-form-field appearance="fill" class="w-full">
       <mat-label>Horas de libre disposición</mat-label>
       <input matInput [(ngModel)]="hours" type="number" min="0" max="8.5" required />
     </mat-form-field>
   </div>
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
+<mat-dialog-actions class="flex justify-end gap-2 mt-4">
   <button mat-stroked-button color="warn" *ngIf="canDelete" (click)="onDelete()">Eliminar</button>
-  <button mat-raised-button color="primary" [disabled]="vacationType === 'hours' && hours <= 0" (click)="onSubmit()">Guardar</button>
+  <button mat-raised-button color="primary" [disabled]="vacationType === 'hours' && hours <= 0"
+    (click)="onSubmit()">Guardar</button>
   <button mat-button (click)="onCancel()">Cancelar</button>
 </mat-dialog-actions>

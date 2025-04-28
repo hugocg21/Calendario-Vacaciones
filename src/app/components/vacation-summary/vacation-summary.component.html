@@ -1,14 +1,15 @@
-<div class="summary-container">
-  <div class="summary-item">
-    <h3>Días de Vacaciones</h3>
-    <p>Total: {{ totalVacationDays }}</p>
-    <p>Usados: {{ usedVacationDays }}</p>
-    <p>Restantes: {{ totalVacationDays - usedVacationDays }}</p>
+<div class="flex flex-col md:flex-row justify-around mb-5 bg-gray-50 p-5 rounded-lg shadow-md min-h-[200px] gap-5">
+  <div class="bg-white p-5 rounded-lg w-full md:w-2/5 text-center shadow-md transform transition duration-200 hover:-translate-y-1 hover:shadow-lg">
+    <h3 class="text-indigo-600 text-2xl font-semibold mb-4">Días de Vacaciones</h3>
+    <p class="text-lg text-gray-800">Total: {{ totalVacationDays }}</p>
+    <p class="text-lg text-gray-800">Usados: {{ usedVacationDays }}</p>
+    <p class="text-lg text-green-500 font-bold">Restantes: {{ totalVacationDays - usedVacationDays }}</p>
   </div>
-  <div class="summary-item">
-    <h3>Horas de Libre Disposición</h3>
-    <p>Total: {{ totalFreeHours }}</p>
-    <p>Usadas: {{ usedFreeHours }}</p>
-    <p>Restantes: {{ totalFreeHours - usedFreeHours }}</p>
+
+  <div class="bg-white p-5 rounded-lg w-full md:w-2/5 text-center shadow-md transform transition duration-200 hover:-translate-y-1 hover:shadow-lg">
+    <h3 class="text-indigo-600 text-2xl font-semibold mb-4">Horas de Libre Disposición</h3>
+    <p class="text-lg text-gray-800">Total: {{ totalFreeHours }}</p>
+    <p class="text-lg text-gray-800">Usadas: {{ usedFreeHours }}</p>
+    <p class="text-lg text-green-500 font-bold">Restantes: {{ totalFreeHours - usedFreeHours }}</p>
   </div>
 </div>

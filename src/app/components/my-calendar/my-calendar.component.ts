@@ -11,6 +11,8 @@ interface Day {
   type?: string;
   hours?: number;
   weekend: boolean;
+  holiday?: boolean; // Add this
+  holidayName?: string; // Add this
 }
 
 interface Month {
@@ -79,6 +81,8 @@ export class MyCalendarComponent {
             new Date(v.date).toDateString() === dayDate.toDate().toDateString()
         );
       const isWeekend = dayDate.day() === 0 || dayDate.day() === 6;
+      const isHoliday = this.vacationService.isHoliday(dayDate.toDate());
+      const holidayName = this.vacationService.getHolidayName(dayDate.toDate());
 
       days.push({
         date: dayDate,
@@ -87,6 +91,8 @@ export class MyCalendarComponent {
         type: vacation ? vacation.type : undefined,
         hours: vacation ? vacation.hours : undefined,
         weekend: isWeekend,
+        holiday: isHoliday, // Ensure this is correctly assigned
+        holidayName: holidayName, // Ensure this is correctly assigned
       });
     }
 
@@ -140,5 +146,17 @@ export class MyCalendarComponent {
 
   isCurrentMonth(day: Day, month: moment.Moment): boolean {
     return day.date.isSame(month, 'month');
+  }
+
+  canSelectDay(day: any): boolean {
+    if (!this.isCurrentMonth(day, day.date)) return false;
+    if (
+      day.type === 'vacation' ||
+      day.type === 'hours' ||
+      day.weekend ||
+      day.holiday
+    )
+      return false;
+    return true;
   }
 }

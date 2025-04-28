@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Vacation } from '../models/vacation.model';
+import moment from 'moment';
 
 @Injectable({
   providedIn: 'root',
@@ -154,5 +155,35 @@ export class VacationService {
     this.totalFreeHours = 69.25;
     this.usedFreeHours = 0;
     this.vacationDaysChanged.next();
+  }
+
+  private holidays: { date: string; name: string }[] = [
+    { date: '2025-01-01', name: 'Año Nuevo' },
+    { date: '2025-01-06', name: 'Día de Reyes' },
+    { date: '2025-03-04', name: 'Carnaval' },
+    { date: '2025-04-17', name: 'Jueves Santo' },
+    { date: '2025-04-18', name: 'Viernes Santo' },
+    { date: '2025-05-01', name: 'Día del Trabajador' },
+    { date: '2025-06-30', name: 'San Pedro' },
+    { date: '2025-08-15', name: 'Asunción de la Virgen' },
+    { date: '2025-09-08', name: 'Días de Asturias' },
+    { date: '2025-10-13', name: 'Día de la Hispanidad' },
+    { date: '2025-12-08', name: 'Día de la Constitución' },
+    { date: '2025-12-24', name: 'Noche Buena' },
+    { date: '2025-12-25', name: 'Navidad' },
+    { date: '2025-12-31', name: 'Noche Vieja' },
+  ];
+
+  isHoliday(date: Date): boolean {
+    return this.holidays.some(
+      (holiday) => holiday.date === moment(date).format('YYYY-MM-DD')
+    );
+  }
+
+  getHolidayName(date: Date): string | undefined {
+    const holiday = this.holidays.find(
+      (h) => h.date === moment(date).format('YYYY-MM-DD')
+    );
+    return holiday ? holiday.name : undefined;
   }
 }
