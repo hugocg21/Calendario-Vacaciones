@@ -13,6 +13,8 @@ interface Day {
   weekend: boolean;
   holiday?: boolean; // Add this
   holidayName?: string; // Add this
+  holiday?: boolean; // Add this
+  holidayName?: string; // Add this
 }
 
 interface Month {
@@ -74,12 +76,9 @@ export class MyCalendarComponent {
     while (date.isBefore(endDate, 'day')) {
       const dayDate = date.add(1, 'day').clone();
       const isSelected = this.vacationService.isSelected(dayDate.toDate());
-      const vacation = this.vacationService
-        .getVacations()
-        .find(
-          (v) =>
-            new Date(v.date).toDateString() === dayDate.toDate().toDateString()
-        );
+      const vacation = this.vacationService.getVacations().find(v =>
+        new Date(v.date).toDateString() === dayDate.toDate().toDateString()
+      );
       const isWeekend = dayDate.day() === 0 || dayDate.day() === 6;
       const isHoliday = this.vacationService.isHoliday(dayDate.toDate());
       const holidayName = this.vacationService.getHolidayName(dayDate.toDate());
