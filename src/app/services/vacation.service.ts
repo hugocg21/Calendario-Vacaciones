@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Vacation } from '../models/vacation.model';
 import moment from 'moment';
-import moment from 'moment';
 
 @Injectable({
   providedIn: 'root',

@@ -13,8 +13,6 @@ interface Day {
   weekend: boolean;
   holiday?: boolean; // Add this
   holidayName?: string; // Add this
-  holiday?: boolean; // Add this
-  holidayName?: string; // Add this
 }
 
 interface Month {
