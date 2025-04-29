@@ -74,9 +74,12 @@ export class MyCalendarComponent {
     while (date.isBefore(endDate, 'day')) {
       const dayDate = date.add(1, 'day').clone();
       const isSelected = this.vacationService.isSelected(dayDate.toDate());
-      const vacation = this.vacationService.getVacations().find(v =>
-        new Date(v.date).toDateString() === dayDate.toDate().toDateString()
-      );
+      const vacation = this.vacationService
+        .getVacations()
+        .find(
+          (v) =>
+            new Date(v.date).toDateString() === dayDate.toDate().toDateString()
+        );
       const isWeekend = dayDate.day() === 0 || dayDate.day() === 6;
       const isHoliday = this.vacationService.isHoliday(dayDate.toDate());
       const holidayName = this.vacationService.getHolidayName(dayDate.toDate());
@@ -147,13 +150,7 @@ export class MyCalendarComponent {
 
   canSelectDay(day: any): boolean {
     if (!this.isCurrentMonth(day, day.date)) return false;
-    if (
-      day.type === 'vacation' ||
-      day.type === 'hours' ||
-      day.weekend ||
-      day.holiday
-    )
-      return false;
+    if (day.weekend || day.holiday) return false;
     return true;
   }
 }

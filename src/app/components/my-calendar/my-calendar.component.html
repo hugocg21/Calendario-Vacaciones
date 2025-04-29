@@ -4,7 +4,8 @@
 </div>
 
 <div class="flex flex-wrap justify-center">
-  <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 bg-white rounded p-5 shadow-md w-[95%]">
+  <div
+    class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 bg-white rounded p-5 shadow-md w-[95%]">
     <div *ngFor="let month of months" class="flex flex-col rounded-lg shadow-sm bg-white p-3">
 
       <!-- Header del Mes -->
@@ -24,11 +25,11 @@
         <div *ngFor="let day of month.days"
           class="flex justify-center items-center w-10 h-10 rounded-full transition duration-300 text-sm select-none"
           [ngClass]="{
-            'bg-green-500 text-white': day.type === 'vacation' && isCurrentMonth(day, month.date),
-            'bg-blue-500 text-white': day.type === 'hours' && isCurrentMonth(day, month.date),
+            'ring-2': isSelected(day, month.date),
+            'bg-green-500 text-white ring-green-600': day.type === 'vacation' && isCurrentMonth(day, month.date),
+            'bg-blue-500 text-white ring-indigo-500': day.type === 'hours' && isCurrentMonth(day, month.date),
             'bg-red-400 text-white': day.weekend && isCurrentMonth(day, month.date),
             'bg-yellow-400 text-black font-bold border border-yellow-600 pointer-events-none': day.holiday && isCurrentMonth(day, month.date),
-            'ring-2 ring-indigo-500': isSelected(day, month.date),
             'text-gray-400 opacity-50 pointer-events-none': !isCurrentMonth(day, month.date),
             'hover:bg-black hover:bg-opacity-10 cursor-pointer': isCurrentMonth(day, month.date) && !day.type && !day.weekend && !day.holiday,
           }" (click)="canSelectDay(day) && selectDay(day)"
