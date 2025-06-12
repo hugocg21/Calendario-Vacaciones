@@ -53,7 +53,8 @@ export class MyCalendarComponent {
   generateCalendar() {
     const startOfYear = moment().startOf('year');
     this.months = [];
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 15; i++) {
+      // Cambiado de 12 a 15 meses
       const monthDate = startOfYear.clone().add(i, 'months');
       this.months.push({
         date: monthDate,
